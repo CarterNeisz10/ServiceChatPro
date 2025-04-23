@@ -1,0 +1,6 @@
+Flask
+flask-cors
+langdetect
+deep-translator
+rapidfuzz
+CORS

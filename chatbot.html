@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .chat-container {
+            width: 500px;
+            height: 600px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 446px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-box p {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 10px;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background-color: #f1f1f1;
+            align-self: flex-end;
+            max-width: 80%;
+            border-radius: 10px 10px 2px 10px;
+        }
+        .bot-message {
+            align-self: flex-start;
+            max-width: 80%;
+            font-style: normal;
+            background-color: transparent;
+            padding: 10px;
+            margin: 5px 0;
+            position: relative;
+            text-indent: 0em;
+        }
+        .bot-message::before {
+            content: '';
+            font-size: 1px;
+            margin-right: 5px;
+            text-indent: 0;
+        }
+        .chat-input {
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            height: 100px;
+            width: 90%;
+            border-radius: 15px;
+            border: 1px solid #ccc;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            margin-bottom: 15px;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            height: 50%;
+            border-radius: 15px 15px 0 0;
+            background-color: transparent;
+        }
+        .chat-input button {
+            width: 35px;
+            height: 35px;
+            border: none;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: auto;
+            margin-top: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect: lighter color when hovered */
+        .chat-input button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message..." />
+            <button id="send-btn">↑</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to type out the bot message letter by letter and auto-scroll
+        function typeOutMessage(botMessageElement, message) {
+            let i = 0;
+            const chatBox = document.getElementById("chat-box");
+            const typingInterval = setInterval(() => {
+                botMessageElement.textContent = "● " + message.substring(0, i + 1);
+                chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to newest line
+                i++;
+                if (i === message.length) {
+                    clearInterval(typingInterval);
+                }
+            }, 10); // Adjust typing speed here
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById("user-input").value;
+            if (!userInput) return;
+
+            const chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML += `<p class="user-message">${userInput}</p>`;
+            document.getElementById("user-input").value = '';
+
+            // Scroll to the latest user message
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            fetch("http://127.0.0.1:5000/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botResponse = data.response;
+
+                // Create the bot message element
+                const botMessageElement = document.createElement("p");
+                botMessageElement.classList.add("bot-message");
+
+                // Append the bot message element to chat box before typing starts
+                chatBox.appendChild(botMessageElement);
+
+                // Start typing out the bot message
+                typeOutMessage(botMessageElement, botResponse);
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        document.getElementById("send-btn").addEventListener("click", sendMessage);
+        document.getElementById("user-input").addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
