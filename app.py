@@ -5,7 +5,8 @@ from Main import ChatApp
 app = Flask(__name__)
 
 # Enable CORS for all routes
-CORS(app)
+CORS(app, origins=["*"])  # Allow all origins (can specify your frontend domain instead of "*")
+
 
 chatbot = ChatApp()
 
