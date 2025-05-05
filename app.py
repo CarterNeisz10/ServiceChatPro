@@ -15,11 +15,12 @@ chatbot = ChatApp()
 def chat():
     data = request.json
     user_input = data.get("message", "")
+    business_id = data.get("business_id", "default")
 
     if not user_input:
         return jsonify({"error": "No input provided"}), 400
 
-    response = chatbot.send_message(user_input)  # Get chatbot's response
+    response = chatbot.send_message(user_input, business_id = business_id)
     return jsonify({"response": chatbot.bot_response})  # Return translated response
 
 

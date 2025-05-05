@@ -1,0 +1,20 @@
+{
+  "responses": {
+    "hello": "Hi there!",
+    "hi": "Hello there!",
+    "help": "Please enter a few keywords.\n\nFor a list of keywords, Type 'Keywords'.",
+    "keywords": "ServiceChat, Products, Services, Price, About, Contact",
+    "how are you": "I'm just a chatbot, but I'm doing great! Thanks for asking.",
+    "thank you": "No problem! I'm always happy to help.",
+    "servicechat": "ServiceChat is a customer service chatbot that is here to help you with all of your customer service related needs! It will be integrated into your website for users to gain quick access to.",
+    "products": "ServiceChat - Our brilliant customer service chatbot made to help your customers with their needs. It can answer a very wide range of questions, understand typos, think quickly, and more.",
+    "services": "Basic Maintenance - Make some tweaks to ServiceChat. \nHeavy Maintenance - Make significant changes to ServiceChat. \nTotal Maintenance Overhaul - Reimagine your whole ServiceChat experience.",
+    "price": "Our model is on sale for $250.00 CAD.",
+    "about": "ServiceChat was created by a computer science student in university. Our goal is to help small business owners with their overwhelming amount of customers that need attention.",
+    "contact": "Please feel free to contact me via my information below.",
+    "basic maintenance": "Make some tweaks to ServiceChat, for $50.",
+    "heavy maintenance": "Make significant changes to ServiceChat, for $100.",
+    "total maintenance overhaul": "Reimagine your whole ServiceChat experience, for $150."
+  }
+}
+
