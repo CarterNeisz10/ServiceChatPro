@@ -24,6 +24,14 @@ def chat():
     return jsonify({"response": chatbot.bot_response})  # Return translated response
 
 
+
+
+from flask import send_from_directory
+
+@app.route("/")
+def serve_chatbot():
+    return send_from_directory("static", "chatbot.html")
+
 import os
 
 if __name__ == "__main__":
