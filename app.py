@@ -11,17 +11,17 @@ CORS(app, origins=["*"])  # Allow all origins (can specify your frontend domain 
 chatbot = ChatApp()
 
 
-@app.route("/chat", methods=["POST"])
+@app.route('/chat', methods=['POST'])
 def chat():
-    data = request.json
-    user_input = data.get("message", "")
-    business_id = data.get("business_id", "default")
+    user_input = request.json.get('message')
+    business_id = request.json.get('business_id', 'default')
 
-    if not user_input:
-        return jsonify({"error": "No input provided"}), 400
+    chatbot = ChatApp(business_id)
+    chatbot.send_message(user_input)
+    bot_response = chatbot.bot_reply()  # Get the response
 
-    response = chatbot.send_message(user_input, business_id = business_id)
-    return jsonify({"response": chatbot.bot_response})  # Return translated response
+    return jsonify({"response": bot_response})  # Send the response back to the frontend
+
 
 
 
