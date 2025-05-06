@@ -137,42 +137,42 @@
         }
 
         function sendMessage() {
-            const userInput = document.getElementById("user-input").value;
-            if (!userInput) return;
+    const userInput = document.getElementById("user-input").value;
+    if (!userInput) return;
 
-            const chatBox = document.getElementById("chat-box");
-            chatBox.innerHTML += `<p class="user-message">${userInput}</p>`;
-            document.getElementById("user-input").value = '';
+    const chatBox = document.getElementById("chat-box");
+    chatBox.innerHTML += `<p class="user-message">${userInput}</p>`;
+    document.getElementById("user-input").value = '';
 
-            // Scroll to the latest user message
-            chatBox.scrollTop = chatBox.scrollHeight;
+    // Scroll to the latest user message
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-            fetch("https://servicechatpro-dmg7.onrender.com/chat", {
+    // Get the business_id from the URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const businessId = urlParams.get("business_id") || "default";
 
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                const urlParams = new URLSearchParams(window.location.search);
-                const businessId = urlParams.get("business_id") || "default";
+    fetch("https://servicechatpro-dmg7.onrender.com/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userInput, business_id: businessId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const botResponse = data.response;
 
-                body: JSON.stringify({ message: userInput, business_id: businessId })
+        // Create the bot message element
+        const botMessageElement = document.createElement("p");
+        botMessageElement.classList.add("bot-message");
 
-            })
-            .then(response => response.json())
-            .then(data => {
-                const botResponse = data.response;
+        // Append the bot message element to chat box before typing starts
+        chatBox.appendChild(botMessageElement);
 
-                // Create the bot message element
-                const botMessageElement = document.createElement("p");
-                botMessageElement.classList.add("bot-message");
+        // Start typing out the bot message
+        typeOutMessage(botMessageElement, botResponse);
+    })
+    .catch(error => console.error("Error:", error));
+}
 
-                // Append the bot message element to chat box before typing starts
-                chatBox.appendChild(botMessageElement);
-
-                // Start typing out the bot message
-                typeOutMessage(botMessageElement, botResponse);
-            })
-            .catch(error => console.error("Error:", error));
-        }
 
         document.getElementById("send-btn").addEventListener("click", sendMessage);
         document.getElementById("user-input").addEventListener("keypress", function (e) {
