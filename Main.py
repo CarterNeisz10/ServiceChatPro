@@ -65,9 +65,8 @@ class ChatApp:
     def send_message(self, user_input_text, business_id="default"):
         self.user_input = user_input_text.strip()
         if not self.user_input:
-            return
+            return "I'm sorry, I didn't catch that."
 
-        # 🔽 Load the correct chatbot for the given business
         try:
             with open(f"responses/{business_id}.json", "r") as f:
                 response_data = json.load(f)
@@ -97,7 +96,8 @@ class ChatApp:
             user_input = str(match[0])
 
         self.bot_response = self.chatbot.get_response(user_input)
-        self.bot_reply()
+        translated_response = self.translate_text(self.bot_response, self.detected_language)
+        return translated_response
 
     def bot_reply(self):
         translated_response = self.translate_text(self.bot_response, self.detected_language)
