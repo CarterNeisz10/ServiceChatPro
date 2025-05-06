@@ -151,7 +151,11 @@
 
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: userInput, business_id: "servicechat"})
+                const urlParams = new URLSearchParams(window.location.search);
+                const businessId = urlParams.get("business_id") || "default";
+
+                body: JSON.stringify({ message: userInput, business_id: businessId })
+
             })
             .then(response => response.json())
             .then(data => {
