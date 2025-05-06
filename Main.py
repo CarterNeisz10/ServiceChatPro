@@ -66,6 +66,18 @@ class ChatApp:
         self.user_input = user_input_text.strip()
         if not self.user_input:
             return
+
+        # 🔽 Load the correct chatbot for the given business
+        try:
+            with open(f"responses/{business_id}.json", "r") as f:
+                response_data = json.load(f)
+                self.chatbot.responses = response_data
+        except FileNotFoundError:
+            print(f"Response file for business ID '{business_id}' not found. Using default responses.")
+            with open("responses/default.json", "r") as f:
+                response_data = json.load(f)
+                self.chatbot.responses = response_data
+
         self.detected_language = self.detect_language(self.user_input)
         translated_input = self.user_input
         if self.detected_language != "en":
@@ -74,13 +86,16 @@ class ChatApp:
                     self.user_input)
             except Exception as e:
                 print(f"Translation Error: {e}")
+
         user_input = translated_input.lower()
         words = user_input.split()
         filtered_words = [word for word in words if word not in self.chatbot.stop_words]
         user_input = " ".join(filtered_words)
+
         match = process.extractOne(user_input, self.chatbot.responses.keys(), score_cutoff=80)
         if match:
             user_input = str(match[0])
+
         self.bot_response = self.chatbot.get_response(user_input)
         self.bot_reply()
 
