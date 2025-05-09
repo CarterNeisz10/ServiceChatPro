@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ServiceChat</title>
   <style>
+    * {
+    box-sizing: border-box;
+    }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -55,9 +58,16 @@
     }
 
     #message-form {
-      background-color: #fefefe;
+      position: relative;
       padding: 20px;
+      background-color: #fefefe;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
     }
+
 
     #text-entry-area {
       position: relative;
