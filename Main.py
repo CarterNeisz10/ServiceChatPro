@@ -1,3 +1,5 @@
+# ServiceChat
+# Imports
 from rapidfuzz import process
 from deep_translator import GoogleTranslator
 from langdetect import detect_langs, DetectorFactory, LangDetectException
@@ -23,7 +25,8 @@ class ChatBot:
                                   "I'm sorry, but I don't understand that.\n\nType 'Help' if you are lost.")
 
     def load_responses(self, business_id):
-        path = f"configs/{business_id}_config.json"
+        # Changed from 'configs/{business_id}_config.json' to 'configs/{business_id}.json'
+        path = f"configs/{business_id}.json"
         if os.path.exists(path):
             with open(path, "r") as f:
                 data = json.load(f)
@@ -66,14 +69,20 @@ class ChatApp:
             return "I'm sorry, I didn't catch that."
 
         try:
-            with open(f"responses/{business_id}.json", "r") as f:
+            # Changed file path from 'responses/{business_id}.json' to 'configs/{business_id}.json'
+            with open(f"configs/{business_id}.json", "r") as f:
                 response_data = json.load(f)
-                self.chatbot.responses = response_data
+                # Assumes the JSON has a "responses" key containing your dictionary of responses.
+                self.chatbot.responses = response_data.get("responses", {})
         except FileNotFoundError:
             print(f"Response file for business ID '{business_id}' not found. Using default responses.")
-            with open("responses/default.json", "r") as f:
-                response_data = json.load(f)
-                self.chatbot.responses = response_data
+            try:
+                with open("configs/default.json", "r") as f:  # Ensure you have a default file if needed
+                    response_data = json.load(f)
+                    self.chatbot.responses = response_data.get("responses", {})
+            except Exception as e:
+                print(f"Could not load default responses: {e}")
+                self.chatbot.responses = {}
 
         self.detected_language = self.detect_language(self.user_input)
         translated_input = self.user_input
