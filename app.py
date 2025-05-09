@@ -16,10 +16,15 @@ def chat():
         print(f"Received message: {user_message}")
         print(f"Business ID: {business_id}")  # Debugging line
 
+        if not user_message:
+            return jsonify({"error": "No message provided"}), 400  # If no message, return an error
+
         chatbot = ChatApp(business_id)
         bot_response = chatbot.send_message(user_message)
 
+        # Return a response to the frontend
         return jsonify({"response": bot_response})  # Send response back to frontend
+
     except Exception as e:
         print(f"Error processing request: {e}")
         return jsonify({"error": str(e)}), 500  # Return a helpful error message
