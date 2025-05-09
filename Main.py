@@ -6,6 +6,7 @@ import os
 
 DetectorFactory.seed = 0
 
+
 # ChatBot Class
 class ChatBot:
     def __init__(self, business_id):  # Accept business_id
