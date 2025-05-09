@@ -13,7 +13,7 @@ def chat():
     business_id = data.get("business_id", "default")
 
     chatbot = ChatApp(business_id)
-    bot_response = chatbot.send_message(user_message)  # Now returns the response
+    bot_response = chatbot.send_message(user_message, business_id)
 
     return jsonify({"response": bot_response})  # Send response back to frontend
 
