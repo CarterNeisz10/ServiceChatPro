@@ -9,22 +9,23 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      height: 100vh;
     }
 
     #chat-wrapper {
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
+      flex: 1;
+      overflow: hidden;
     }
 
     #chatbox {
-      flex-grow: 1;
+      flex: 1;
       overflow-y: auto;
       padding: 10px;
-      background-color: #fefefe; /* Lighter shade of white */
+      background-color: #fefefe;
       display: flex;
       flex-direction: column;
     }
@@ -41,21 +42,21 @@
       background-color: #dddddd;
       color: #000;
       align-self: flex-end;
-      margin-left: auto;
       border-radius: 16px;
     }
 
     .bot {
+      background-color: transparent;
       color: #000;
       align-self: flex-start;
-      margin-right: auto;
-      font-size: 14px;
+      padding: 0;
+      margin-top: 8px;
+      border-radius: 0;
     }
 
     #message-form {
-      position: relative;
-      padding: 20px;
       background-color: #fefefe;
+      padding: 20px;
     }
 
     #text-entry-area {
@@ -68,7 +69,8 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Bigger shadow */
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     #message-input {
@@ -172,13 +174,13 @@
       messageEl.className = `message ${sender}`;
       messageEl.textContent = message;
       document.getElementById('chatbox').appendChild(messageEl);
-      document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
     }
 
     function typeMessage(text, sender) {
+      const chatbox = document.getElementById('chatbox');
       const messageEl = document.createElement('div');
       messageEl.className = `message ${sender}`;
-      document.getElementById('chatbox').appendChild(messageEl);
+      chatbox.appendChild(messageEl);
 
       let index = 0;
       const interval = setInterval(() => {
@@ -186,9 +188,19 @@
         index++;
         if (index === text.length) {
           clearInterval(interval);
-          document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
+          scrollBotMessageIntoView(messageEl);
         }
-      }, 10); // Faster typing
+      }, 10);
+    }
+
+    function scrollBotMessageIntoView(element) {
+      const chatbox = document.getElementById('chatbox');
+      const chatboxRect = chatbox.getBoundingClientRect();
+      const elementRect = element.getBoundingClientRect();
+
+      if (elementRect.bottom > chatboxRect.bottom || elementRect.top < chatboxRect.top) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
     }
 
     document.getElementById('send-message').addEventListener('click', sendMessage);
