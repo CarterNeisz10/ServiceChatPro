@@ -77,7 +77,7 @@ class ChatApp:
         except FileNotFoundError:
             print(f"Response file for business ID '{business_id}' not found. Using default responses.")
             try:
-                with open("configs/default.json", "r") as f:  # Ensure you have a default file if needed
+                with open("configs/servicechat.json", "r") as f:  # Ensure you have a default file if needed
                     response_data = json.load(f)
                     self.chatbot.responses = response_data.get("responses", {})
             except Exception as e:
@@ -116,4 +116,5 @@ if __name__ == "__main__":
     chatbot = ChatApp(business_id="servicechat")
     while True:
         user_input = input("You: ")
-        chatbot.send_message(user_input)
+        response = chatbot.send_message(user_input)  # Added assignment to capture the response
+        print(f"Bot: {response}")
