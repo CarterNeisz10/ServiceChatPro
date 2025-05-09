@@ -22,6 +22,8 @@ def chat():
         chatbot = ChatApp(business_id)
         bot_response = chatbot.send_message(user_message)
 
+        print(f"Bot Response: {bot_response}")  # Log the bot response
+
         # Return a response to the frontend
         return jsonify({"response": bot_response})  # Send response back to frontend
 
@@ -36,5 +38,5 @@ def serve_chatbot():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5001))  # Change the default port to 5001
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
