@@ -1,5 +1,3 @@
-# ServiceChat
-# Imports
 from rapidfuzz import process
 from deep_translator import GoogleTranslator
 from langdetect import detect_langs, DetectorFactory, LangDetectException
@@ -7,7 +5,6 @@ import json
 import os
 
 DetectorFactory.seed = 0
-
 
 # ChatBot Class
 class ChatBot:
