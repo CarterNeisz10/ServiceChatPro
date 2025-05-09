@@ -1,120 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chatbot</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ServiceChat</title>
   <style>
-    /* Styling for chatbot interface */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
     #chatbox {
-      width: 100%;
-      height: 100%;
+      height: 520px;
       overflow-y: auto;
       padding: 10px;
-      background-color: #f1f1f1;
+      background-color: #f5f5f5;
     }
-    #message-input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 4px;
-      background-color: #e0e0e0;
+
+    .user, .bot {
+      margin: 4px 0;
+      padding: 8px 12px;
+      border-radius: 16px;
+      max-width: 80%;
+      display: inline-block;
+      word-wrap: break-word;
+      font-size: 14px;
     }
-    #chatbot-toggle {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 60px;
-      height: 60px;
-      background-color: black;
+
+    .user {
+      background-color: #007aff;
       color: white;
-      border-radius: 50%;
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      align-self: flex-end;
+      margin-left: auto;
     }
-    #chatbot-frame {
-      position: fixed;
-      bottom: 100px;
-      right: 25px;
-      width: 400px;
-      height: 600px;
+
+    .bot {
+      background-color: #e0e0e0;
+      color: #000;
+      align-self: flex-start;
+      margin-right: auto;
+    }
+
+    #message-form {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      background-color: #fff;
+    }
+
+    #message-input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 14px;
+    }
+
+    #send-message {
+      margin-left: 10px;
+      padding: 0 16px;
       border: none;
       border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      z-index: 9999;
-      display: none;
+      background-color: #007aff;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    #chat-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
   </style>
 </head>
 <body>
-  <div id="chatbox"></div>
+  <div id="chat-wrapper">
+    <div id="chatbox"></div>
 
-  <textarea id="message-input" placeholder="Type your message..."></textarea>
-
-  <button id="send-message">Send</button>
+    <div id="message-form">
+      <input type="text" id="message-input" placeholder="Type your message..." autocomplete="off" />
+      <button id="send-message">Send</button>
+    </div>
+  </div>
 
   <script>
-    // Function to handle sending and displaying messages
-    function sendMessage() {
-      const message = document.getElementById('message-input').value.trim();
-      if (message === '') return;  // Don't send empty messages
+    // Parse business_id from URL query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const businessId = urlParams.get('business_id') || 'default';
 
-      // Display user message
+    function sendMessage() {
+      const input = document.getElementById('message-input');
+      const message = input.value.trim();
+      if (!message) return;
+
       displayMessage(message, 'user');
 
-      // Send message to the server
       fetch('https://servicechatpro-dmg7.onrender.com/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: message,
-          business_id: 'servicechat'  // Pass the business ID
+          business_id: businessId
         }),
       })
       .then(response => response.json())
       .then(data => {
-        if (data.response) {
-          displayMessage(data.response, 'bot');
-        } else if (data.error) {
-          displayMessage(data.error, 'bot');
-        }
+        const reply = data.response || data.error || 'No response';
+        displayMessage(reply, 'bot');
       })
-      .catch(error => {
-        console.error('Error:', error);
-        displayMessage('Oops! Something went wrong. Please try again.', 'bot');
+      .catch(err => {
+        console.error(err);
+        displayMessage('Error connecting to server.', 'bot');
       });
 
-      // Clear the input field
-      document.getElementById('message-input').value = '';
+      input.value = '';
     }
 
-    // Function to display messages in the chatbox
     function displayMessage(message, sender) {
-      if (!message || message.trim() === '') return;
-
-      const messageElement = document.createElement('div');
-      messageElement.textContent = message;
-      messageElement.classList.add(sender);
-      document.getElementById('chatbox').appendChild(messageElement);
-
-      // Scroll to the bottom of the chat
+      const messageEl = document.createElement('div');
+      messageEl.className = sender;
+      messageEl.textContent = message;
+      document.getElementById('chatbox').appendChild(messageEl);
       document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
     }
 
-    // Send message when the send button is clicked
     document.getElementById('send-message').addEventListener('click', sendMessage);
-
-    // Also allow sending message with Enter key
     document.getElementById('message-input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
+        e.preventDefault(); // Prevent new line
         sendMessage();
       }
     });
