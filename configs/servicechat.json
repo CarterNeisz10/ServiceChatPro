@@ -57,8 +57,18 @@
       "What's up? Is there anything that you need help with?"
     ],
     "how are you": "I'm just a chatbot, but I'm doing great! Thanks for asking.",
-    "thank you": "No problem! I'm always happy to help.",
+    "thank you": [
+      "No problem! I'm always happy to help.",
+      "Of course! I'm glad that I could help.",
+      "For sure! Let me know if there is anything else that you need."
+    ],
     "okay" : "Let me know if there is anything else that you need help with.",
+    "poop" : [
+      "Did you just go?",
+      "For real.",
+      "I bet you like it, huh?",
+      "Wow so funny."
+    ],
 
 
 
