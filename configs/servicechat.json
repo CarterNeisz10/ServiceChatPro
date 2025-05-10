@@ -1,23 +1,116 @@
 {
   "responses": {
-    "hello": "Hi there!",
-    "hi": "Hello there!",
-    "help": "Please enter a few keywords.\n\nFor a list of keywords, Type 'Keywords'.",
-    "keywords": "ServiceChat, Products, Services, Price, About, Contact",
+    "hello": [
+      "Hey",
+      "Hello!",
+      "Hi!",
+      "What's up?",
+      "Hey! How can I help?",
+      "Hello! How can I help?",
+      "Hi! How can I help?",
+      "What's up? How can I help?",
+      "Hey! Is there anything that you need help with?",
+      "Hello! Is there anything that you need help with?",
+      "Hi! Is there anything that you need help with?",
+      "What's up? Is there anything that you need help with?"
+    ],
+    "hi": [
+      "Hey",
+      "Hello!",
+      "Hi!",
+      "What's up?",
+      "Hey! How can I help?",
+      "Hello! How can I help?",
+      "Hi! How can I help?",
+      "What's up? How can I help?",
+      "Hey! Is there anything that you need help with?",
+      "Hello! Is there anything that you need help with?",
+      "Hi! Is there anything that you need help with?",
+      "What's up? Is there anything that you need help with?"
+    ],
+    "hey": [
+      "Hey",
+      "Hello!",
+      "Hi!",
+      "What's up?",
+      "Hey! How can I help?",
+      "Hello! How can I help?",
+      "Hi! How can I help?",
+      "What's up? How can I help?",
+      "Hey! Is there anything that you need help with?",
+      "Hello! Is there anything that you need help with?",
+      "Hi! Is there anything that you need help with?",
+      "What's up? Is there anything that you need help with?"
+    ],
+    "whats up": [
+      "Hey",
+      "Hello!",
+      "Hi!",
+      "What's up?",
+      "Hey! How can I help?",
+      "Hello! How can I help?",
+      "Hi! How can I help?",
+      "What's up? How can I help?",
+      "Hey! Is there anything that you need help with?",
+      "Hello! Is there anything that you need help with?",
+      "Hi! Is there anything that you need help with?",
+      "What's up? Is there anything that you need help with?"
+    ],
     "how are you": "I'm just a chatbot, but I'm doing great! Thanks for asking.",
     "thank you": "No problem! I'm always happy to help.",
+    "okay" : "Let me know if there is anything else that you need help with.",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "help": "Please enter a few keywords.\n\nFor a list of keywords, Type 'Keywords'.",
+    "keywords": [
+      "ServiceChat, Products, Services, Price, About, Contact, Installation",
+      "Try typing: ServiceChat, Products, Services, Price, About, Contact, Installation",
+      "Search for: ServiceChat, Products, Services, Price, About, Contact, Installation",
+      "Enter: ServiceChat, Products, Services, Price, About, Contact, Installation",
+      "Start with: ServiceChat, Products, Services, Price, About, Contact, Installation"
+    ],
     "servicechat": "ServiceChat is a customer service chatbot that is here to help you with all of your customer service related needs! It will be integrated into your website for users to gain quick access to.",
     "products": "ServiceChat - Our brilliant customer service chatbot made to help your customers with their needs. It can answer a very wide range of questions, understand typos, think quickly, and more.",
     "services": "Basic Maintenance - Make some tweaks to ServiceChat. \nHeavy Maintenance - Make significant changes to ServiceChat. \nTotal Maintenance Overhaul - Reimagine your whole ServiceChat experience.",
-    "price": "What would you like to know the price of? We sell ServiceChat Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul.",
-    "cost" : "What would you like to know the cost of? We sell our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul.",
+    "price": [
+      "What would you like to know the price of? We sell our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul.",
+      "We sell various different products and services, such as our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul. Prices vary.",
+      "What are you looking for? We are selling our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul, all with their respective prices.",
+      "We have several different products and services for sale, like our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul."
+    ],
+    "cost": [
+      "What would you like to know the cost of? We sell our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul.",
+      "We sell various different products and services, such as our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul. Costs vary.",
+      "What are you looking for? We are selling our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul, all with their respective costs.",
+      "We have several different products and services for sale, like our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul."
+    ],
     "about": "ServiceChat was created by a computer science student in university. Our goal is to help small business owners with their overwhelming amount of customers that need attention.",
-    "contact": "Please feel free to contact me via my information below.",
+    "contact": "Contact us via E-mail at carterneisz@icloud.com, or via Phone at +1(306)-961-0192.",
     "basic maintenance": "Make some tweaks to ServiceChat, for $50.",
     "heavy maintenance": "Make significant changes to ServiceChat, for $100.",
     "total maintenance overhaul": "Reimagine your whole ServiceChat experience, for $150.",
-    "chatbot" : "Our Chatbot is on sale for $250.00 CAD.",
-    "okay" : "Is there anything else that you need help with?"
+    "chatbot" : [
+      "Our Chatbot is on sale for $250.00 CAD.",
+      "You can purchase our Chatbot for $250.00 CAD.",
+      "Our Chatbot is $250.00 CAD.",
+      "Add ServiceChat to your website for $250.00 CAD.",
+      "The ServiceChat Chatbot is $250.00 CAD."
+    ],
+    "installation" : "ServiceChat can be installed on your website in 3 different ways: 1. Login to your website builder, and installation can be done in person with your website builder open.(recommended) 2. You can receive an installation guide. This will come with specific instructions on how to install ServiceChat, and we will be here for you to contact if there are any issues. 3. Send your login credentials to your website builder, and we can install it remotely.(Not recommended due to your privacy and safety)"
   }
 }
 

@@ -3,6 +3,7 @@
 from rapidfuzz import process
 import json
 import os
+import random
 
 # ChatBot Class
 class ChatBot:
@@ -15,8 +16,13 @@ class ChatBot:
                            "slavery"}
 
     def get_response(self, user_input):
-        return self.responses.get(user_input.lower(),
-                                  "I'm sorry, but I don't understand that.\n\nType 'Help' if you are lost.")
+        possible_responses = self.responses.get(user_input.lower())
+        if not possible_responses:
+            return "I'm sorry, but I don't understand that.\n\nType 'Help' if you are lost."
+
+        if isinstance(possible_responses, list):
+            return random.choice(possible_responses)
+        return possible_responses  # fallback if it's a string
 
     def load_responses(self, business_id):
         path = f"configs/{business_id}.json"
