@@ -62,10 +62,21 @@
       padding: 20px;
       background-color: #fefefe;
       display: flex;
-      justify-content: center;
+      flex-direction: column; /* Stack elements vertically */
+      align-items: center;
       width: 100%;
       box-sizing: border-box;
     }
+
+    #info-hint {
+      color: grey;
+      font-size: 13px;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+
+
 
 
 
@@ -143,6 +154,7 @@
         <textarea id="message-input" placeholder="Type your message..." autocomplete="off"></textarea>
         <button id="send-message"></button>
       </div>
+      <div id="info-hint">Please check important info.</div>
     </div>
   </div>
 
