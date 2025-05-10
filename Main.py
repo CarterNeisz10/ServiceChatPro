@@ -11,7 +11,8 @@ class ChatBot:
         self.responses = self.load_responses(business_id)
         self.stop_words = {"the", "is", "who", "what", "when", "where", "why", "how", "a", "an", "i", "im", "i'm",
                            "looking", "for", "to", "?", ".", ",", "much", "this", "that", "get", "for", "me", "money",
-                           "does", "cost", "about", "need", "today", "am", "well", "need"}
+                           "does", "about", "need", "today", "am", "well", "need", "people", "person", "slaves",
+                           "slavery"}
 
     def get_response(self, user_input):
         return self.responses.get(user_input.lower(),
