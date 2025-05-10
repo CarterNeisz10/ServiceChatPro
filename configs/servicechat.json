@@ -16,7 +16,8 @@
     "basic maintenance": "Make some tweaks to ServiceChat, for $50.",
     "heavy maintenance": "Make significant changes to ServiceChat, for $100.",
     "total maintenance overhaul": "Reimagine your whole ServiceChat experience, for $150.",
-    "chatbot" : "Our Chatbot is on sale for $250.00 CAD."
+    "chatbot" : "Our Chatbot is on sale for $250.00 CAD.",
+    "okay" : "Is there anything else that you need help with?",
   }
 }
 
