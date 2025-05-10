@@ -40,6 +40,7 @@ class ChatApp:
         self.chatbot = ChatBot(business_id)
         self.user_input = ""
         self.bot_response = ""
+        self.last_bot_message = ""
 
     def send_message(self, user_input_text, business_id="default"):
         self.user_input = user_input_text.strip()
@@ -70,6 +71,32 @@ class ChatApp:
             user_input = str(match[0])
 
         self.bot_response = self.chatbot.get_response(user_input)
+
+
+
+
+
+
+        # Context-aware handling
+        if user_input in {"yes", "yeah", "yep"}:
+            if "anything that you need help with?" in self.last_bot_message.lower():
+                self.bot_response = "What do you need help with?"
+            else:
+                self.bot_response = self.chatbot.get_response(user_input)
+        elif user_input in {"no", "nah"}:
+            if "anything that you need help with?" in self.last_bot_message.lower():
+                self.bot_response = "Okay! Have a great day."
+            else:
+                self.bot_response = self.chatbot.get_response(user_input)
+        else:
+            self.bot_response = self.chatbot.get_response(user_input)
+
+
+
+
+
+
+        self.last_bot_message = self.bot_response
         return self.bot_response
 
     def bot_reply(self):
