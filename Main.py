@@ -47,6 +47,7 @@ class ChatApp:
         if not self.user_input:
             return "I'm sorry, I didn't catch that."
 
+        # Load business-specific or default responses
         try:
             with open(f"configs/{business_id}.json", "r") as f:
                 response_data = json.load(f)
@@ -62,20 +63,19 @@ class ChatApp:
 
         original_input = self.user_input.lower()
 
-        # --- Context-aware replies ---
-        if "help" in self.last_bot_message.lower():
-            if original_input in {"yes", "yeah", "yep"}:
+        # --- Context-aware handling FIRST ---
+        if original_input in {"yes", "yeah", "yep"}:
+            if "is there anything that you need help with" in self.last_bot_message.lower():
                 self.bot_response = "What do you need help with?"
                 self.last_bot_message = self.bot_response
                 return self.bot_response
-
-        if original_input in {"no", "nah"}:
-            if "help" in self.last_bot_message.lower():
+        elif original_input in {"no", "nah"}:
+            if "is there anything that you need help with" in self.last_bot_message.lower():
                 self.bot_response = "Okay! Have a great day."
                 self.last_bot_message = self.bot_response
                 return self.bot_response
 
-        # --- Continue with fuzzy match logic ---
+        # --- Clean user input for fuzzy match ---
         words = original_input.split()
         filtered_words = [word for word in words if word not in self.chatbot.stop_words]
         cleaned_input = " ".join(filtered_words)
@@ -84,6 +84,7 @@ class ChatApp:
         if match:
             cleaned_input = str(match[0])
 
+        # Default chatbot response
         self.bot_response = self.chatbot.get_response(cleaned_input)
         self.last_bot_message = self.bot_response
         return self.bot_response
