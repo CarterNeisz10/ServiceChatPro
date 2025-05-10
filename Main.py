@@ -47,22 +47,26 @@ class ChatApp:
         if not self.user_input:
             return "I'm sorry, I didn't catch that."
 
+        # Ensure last_bot_message exists
+        if not hasattr(self, "last_bot_message"):
+            self.last_bot_message = ""
+
         user_input_lower = self.user_input.lower()
 
-        # Context-aware responses first
+        # --- CONTEXT-AWARE RESPONSE CHECK ---
         if user_input_lower in {"yes", "yeah", "yep"}:
             if "anything that you need help with" in self.last_bot_message.lower():
                 self.bot_response = "What do you need help with?"
                 self.last_bot_message = self.bot_response
                 return self.bot_response
 
-        elif user_input_lower in {"no", "nah"}:
+        if user_input_lower in {"no", "nah"}:
             if "anything that you need help with" in self.last_bot_message.lower():
                 self.bot_response = "Okay! Have a great day."
                 self.last_bot_message = self.bot_response
                 return self.bot_response
 
-        # Load chatbot responses
+        # --- LOAD RESPONSES ---
         try:
             with open(f"configs/{business_id}.json", "r") as f:
                 response_data = json.load(f)
@@ -76,17 +80,19 @@ class ChatApp:
                 print(f"Could not load default responses: {e}")
                 self.chatbot.responses = {}
 
-        # Filter and fuzzy match
+        # --- CLEAN INPUT ---
         words = user_input_lower.split()
         filtered_words = [word for word in words if word not in self.chatbot.stop_words]
         cleaned_input = " ".join(filtered_words)
 
+        # --- FUZZY MATCH ---
         match = process.extractOne(cleaned_input, self.chatbot.responses.keys(), score_cutoff=80)
         if match:
             cleaned_input = str(match[0])
         else:
             cleaned_input = user_input_lower
 
+        # --- GET RESPONSE ---
         self.bot_response = self.chatbot.get_response(cleaned_input)
         self.last_bot_message = self.bot_response
         return self.bot_response
