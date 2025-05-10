@@ -74,7 +74,19 @@ class ChatApp:
         if match:
             cleaned_input = str(match[0])
 
-
+        # Context-aware handling
+        if user_input in {"yes", "yeah", "yep"}:
+            if "help" in last_message.lower():
+                self.bot_response = "What do you need help with?"
+            else:
+                self.bot_response = self.chatbot.get_response(cleaned_input)
+        elif user_input in {"no", "nah"}:
+            if "help" in last_message.lower():
+                self.bot_response = "Okay! Have a great day."
+            else:
+                self.bot_response = self.chatbot.get_response(cleaned_input)
+        else:
+            self.bot_response = self.chatbot.get_response(cleaned_input)
 
         # Update last_bot_message with the current response (AFTER using the old one)
         self.last_bot_message = self.bot_response
