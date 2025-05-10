@@ -40,7 +40,7 @@ class ChatApp:
         self.chatbot = ChatBot(business_id)
         self.user_input = ""
         self.bot_response = ""
-        self.last_bot_message = ""
+
 
     def send_message(self, user_input_text, business_id="default"):
         self.user_input = user_input_text.strip()
@@ -72,10 +72,7 @@ class ChatApp:
 
         self.bot_response = self.chatbot.get_response(user_input)
 
-
-
-
-
+        self.last_bot_message = self.bot_response
 
         # Context-aware handling
         if user_input in {"yes", "yeah", "yep"}:
