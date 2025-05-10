@@ -43,9 +43,7 @@ class ChatApp:
         self.last_bot_message = ""
 
     def send_message(self, user_input_text, business_id="default"):
-        original_input = user_input_text.strip()
-        self.user_input = original_input
-
+        self.user_input = user_input_text.strip()
         if not self.user_input:
             return "I'm sorry, I didn't catch that."
 
@@ -63,33 +61,33 @@ class ChatApp:
                 print(f"Could not load default responses: {e}")
                 self.chatbot.responses = {}
 
-        original_lower = original_input.lower()
+        # Lowercase original user input for context logic
+        original_input = self.user_input.lower()
 
-        # 🔑 Context-aware logic (BEFORE filtering or fuzzymatching)
-        if original_lower in {"yes", "yeah", "yep"}:
-            if "anything" in self.last_bot_message.lower() and "help" in self.last_bot_message.lower():
+        # --- Context-aware handling ---
+        if original_input in {"yes", "yeah", "yep"}:
+            if "help" in self.last_bot_message.lower() and "anything" in self.last_bot_message.lower():
                 self.bot_response = "What do you need help with?"
-            else:
-                self.bot_response = self.chatbot.get_response(original_lower)
-        elif original_lower in {"no", "nah"}:
-            if "anything" in self.last_bot_message.lower() and "help" in self.last_bot_message.lower():
+                self.last_bot_message = self.bot_response
+                return self.bot_response
+        elif original_input in {"no", "nah"}:
+            if "help" in self.last_bot_message.lower() and "anything" in self.last_bot_message.lower():
                 self.bot_response = "Okay! Have a great day."
-            else:
-                self.bot_response = self.chatbot.get_response(original_lower)
+                self.last_bot_message = self.bot_response
+                return self.bot_response
+
+        # --- Fuzzy matching logic for normal input ---
+        words = original_input.split()
+        filtered_words = [word for word in words if word not in self.chatbot.stop_words]
+        cleaned_input = " ".join(filtered_words)
+
+        match = process.extractOne(cleaned_input, self.chatbot.responses.keys(), score_cutoff=80)
+        if match:
+            cleaned_input = str(match[0])
         else:
-            # 💬 Continue with normal logic
-            words = original_lower.split()
-            filtered_words = [word for word in words if word not in self.chatbot.stop_words]
-            filtered_input = " ".join(filtered_words)
+            cleaned_input = original_input  # fallback to original input
 
-            match = process.extractOne(filtered_input, self.chatbot.responses.keys(), score_cutoff=80)
-            if match:
-                matched_key = str(match[0])
-            else:
-                matched_key = filtered_input
-
-            self.bot_response = self.chatbot.get_response(matched_key)
-
+        self.bot_response = self.chatbot.get_response(cleaned_input)
         self.last_bot_message = self.bot_response
         return self.bot_response
 
