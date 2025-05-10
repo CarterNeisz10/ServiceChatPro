@@ -76,12 +76,12 @@ class ChatApp:
 
         # Context-aware handling
         if user_input in {"yes", "yeah", "yep"}:
-            if "anything" in last_message.lower() and "help" in last_message.lower():
+            if "snoop" in last_message.lower():
                 self.bot_response = "What do you need help with?"
             else:
                 self.bot_response = self.chatbot.get_response(cleaned_input)
         elif user_input in {"no", "nah"}:
-            if "anything" in last_message.lower() and "help" in last_message.lower():
+            if "snoop" in last_message.lower():
                 self.bot_response = "Okay! Have a great day."
             else:
                 self.bot_response = self.chatbot.get_response(cleaned_input)
