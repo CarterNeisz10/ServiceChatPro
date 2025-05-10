@@ -40,6 +40,7 @@ class ChatApp:
         self.chatbot = ChatBot(business_id)
         self.user_input = ""
         self.bot_response = ""
+        self.last_bot_message = ""
 
     def send_message(self, user_input_text, business_id="default"):
         original_input = user_input_text.strip()
