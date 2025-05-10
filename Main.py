@@ -47,7 +47,7 @@ class ChatApp:
         if not self.user_input:
             return "I'm sorry, I didn't catch that."
 
-        # Load the correct responses file
+        # Load responses
         try:
             with open(f"configs/{business_id}.json", "r") as f:
                 response_data = json.load(f)
@@ -61,21 +61,24 @@ class ChatApp:
                 print(f"Could not load default responses: {e}")
                 self.chatbot.responses = {}
 
+        # Store original input before filtering
         original_input = self.user_input.lower()
 
-        # Context-aware handling comes FIRST
+        # Context-aware handling FIRST
         if original_input in {"yes", "yeah", "yep"}:
-            if "is there anything that you need help with" in self.last_bot_message.lower():
+            if hasattr(self,
+                       "last_bot_message") and "anything that you need help with" in self.last_bot_message.lower():
                 self.bot_response = "What do you need help with?"
                 self.last_bot_message = self.bot_response
                 return self.bot_response
         elif original_input in {"no", "nah"}:
-            if "is there anything that you need help with" in self.last_bot_message.lower():
+            if hasattr(self,
+                       "last_bot_message") and "anything that you need help with" in self.last_bot_message.lower():
                 self.bot_response = "Okay! Have a great day."
                 self.last_bot_message = self.bot_response
                 return self.bot_response
 
-        # Continue with normal input processing
+        # Filter and fuzzy match
         words = original_input.split()
         filtered_words = [word for word in words if word not in self.chatbot.stop_words]
         cleaned_input = " ".join(filtered_words)
@@ -83,6 +86,8 @@ class ChatApp:
         match = process.extractOne(cleaned_input, self.chatbot.responses.keys(), score_cutoff=80)
         if match:
             cleaned_input = str(match[0])
+        else:
+            cleaned_input = original_input  # fallback to original
 
         self.bot_response = self.chatbot.get_response(cleaned_input)
         self.last_bot_message = self.bot_response
