@@ -63,8 +63,8 @@ class ChatApp:
         original_input = self.user_input.lower()
 
         # --- Context-aware replies ---
-        if original_input in {"yes", "yeah", "yep"}:
-            if "help" in self.last_bot_message.lower():
+        if "help" in self.last_bot_message.lower():
+            if original_input in {"yes", "yeah", "yep"}:
                 self.bot_response = "What do you need help with?"
                 self.last_bot_message = self.bot_response
                 return self.bot_response
