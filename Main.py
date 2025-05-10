@@ -40,7 +40,7 @@ class ChatApp:
         self.chatbot = ChatBot(business_id)
         self.user_input = ""
         self.bot_response = ""
-
+        self.last_bot_message = ""
 
     def send_message(self, user_input_text, business_id="default"):
         self.user_input = user_input_text.strip()
@@ -74,6 +74,10 @@ class ChatApp:
         if match:
             cleaned_input = str(match[0])
 
+
+
+        # Update last_bot_message with the current response (AFTER using the old one)
+        self.last_bot_message = self.bot_response
         return self.bot_response
 
     def bot_reply(self):
