@@ -64,26 +64,32 @@ class ChatApp:
         user_input = self.user_input.lower()
         words = user_input.split()
         filtered_words = [word for word in words if word not in self.chatbot.stop_words]
-        user_input = " ".join(filtered_words)
+        cleaned_input = " ".join(filtered_words)
 
-        match = process.extractOne(user_input, self.chatbot.responses.keys(), score_cutoff=80)
+        # Save last bot message before generating new response
+        last_message = self.last_bot_message
+
+        # Fuzzy match
+        match = process.extractOne(cleaned_input, self.chatbot.responses.keys(), score_cutoff=80)
         if match:
-            user_input = str(match[0])
-
-        self.bot_response = self.chatbot.get_response(user_input)
-        self.last_bot_message = self.bot_response  # Set this immediately after the response is fetched
+            cleaned_input = str(match[0])
 
         # Context-aware handling
         if user_input in {"yes", "yeah", "yep"}:
-            if "help" in self.last_bot_message.lower() and "anything" in self.last_bot_message.lower():
+            if "anything" in last_message.lower() and "help" in last_message.lower():
                 self.bot_response = "What do you need help with?"
+            else:
+                self.bot_response = self.chatbot.get_response(cleaned_input)
         elif user_input in {"no", "nah"}:
-            if "help" in self.last_bot_message.lower() and "anything" in self.last_bot_message.lower():
+            if "anything" in last_message.lower() and "help" in last_message.lower():
                 self.bot_response = "Okay! Have a great day."
+            else:
+                self.bot_response = self.chatbot.get_response(cleaned_input)
         else:
-            self.bot_response = self.chatbot.get_response(user_input)
+            self.bot_response = self.chatbot.get_response(cleaned_input)
 
-        self.last_bot_message = self.bot_response  # Ensure this is updated with the new response
+        # Update last_bot_message with the current response (AFTER using the old one)
+        self.last_bot_message = self.bot_response
         return self.bot_response
 
     def bot_reply(self):
