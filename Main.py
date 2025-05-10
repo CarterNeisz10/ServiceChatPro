@@ -47,31 +47,12 @@ class ChatApp:
         if not self.user_input:
             return "I'm sorry, I didn't catch that."
 
-        # Ensure last_bot_message exists
-        if not hasattr(self, "last_bot_message"):
-            self.last_bot_message = ""
-
-        user_input_lower = self.user_input.lower()
-
-        # --- CONTEXT-AWARE RESPONSE CHECK ---
-        if user_input_lower in {"yes", "yeah", "yep"}:
-            if "anything that you need help with" in self.last_bot_message.lower():
-                self.bot_response = "What do you need help with?"
-                self.last_bot_message = self.bot_response
-                return self.bot_response
-
-        if user_input_lower in {"no", "nah"}:
-            if "anything that you need help with" in self.last_bot_message.lower():
-                self.bot_response = "Okay! Have a great day."
-                self.last_bot_message = self.bot_response
-                return self.bot_response
-
-        # --- LOAD RESPONSES ---
         try:
             with open(f"configs/{business_id}.json", "r") as f:
                 response_data = json.load(f)
                 self.chatbot.responses = response_data.get("responses", {})
         except FileNotFoundError:
+            print(f"Response file for business ID '{business_id}' not found. Using default responses.")
             try:
                 with open("configs/servicechat.json", "r") as f:
                     response_data = json.load(f)
@@ -80,21 +61,29 @@ class ChatApp:
                 print(f"Could not load default responses: {e}")
                 self.chatbot.responses = {}
 
-        # --- CLEAN INPUT ---
-        words = user_input_lower.split()
+        user_input = self.user_input.lower()
+        words = user_input.split()
         filtered_words = [word for word in words if word not in self.chatbot.stop_words]
-        cleaned_input = " ".join(filtered_words)
+        user_input = " ".join(filtered_words)
 
-        # --- FUZZY MATCH ---
-        match = process.extractOne(cleaned_input, self.chatbot.responses.keys(), score_cutoff=80)
+        match = process.extractOne(user_input, self.chatbot.responses.keys(), score_cutoff=80)
         if match:
-            cleaned_input = str(match[0])
-        else:
-            cleaned_input = user_input_lower
+            user_input = str(match[0])
 
-        # --- GET RESPONSE ---
-        self.bot_response = self.chatbot.get_response(cleaned_input)
-        self.last_bot_message = self.bot_response
+        self.bot_response = self.chatbot.get_response(user_input)
+        self.last_bot_message = self.bot_response  # Set this immediately after the response is fetched
+
+        # Context-aware handling
+        if user_input in {"yes", "yeah", "yep"}:
+            if "help" in self.last_bot_message.lower() and "anything" in self.last_bot_message.lower():
+                self.bot_response = "What do you need help with?"
+        elif user_input in {"no", "nah"}:
+            if "help" in self.last_bot_message.lower() and "anything" in self.last_bot_message.lower():
+                self.bot_response = "Okay! Have a great day."
+        else:
+            self.bot_response = self.chatbot.get_response(user_input)
+
+        self.last_bot_message = self.bot_response  # Ensure this is updated with the new response
         return self.bot_response
 
     def bot_reply(self):
@@ -107,3 +96,4 @@ if __name__ == "__main__":
         user_input = input("You: ")
         response = chatbot.send_message(user_input)
         print(f"Bot: {response}")
+
