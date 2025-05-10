@@ -52,7 +52,6 @@ class ChatApp:
                 response_data = json.load(f)
                 self.chatbot.responses = response_data.get("responses", {})
         except FileNotFoundError:
-            print(f"Response file for business ID '{business_id}' not found. Using default responses.")
             try:
                 with open("configs/servicechat.json", "r") as f:
                     response_data = json.load(f)
@@ -61,22 +60,22 @@ class ChatApp:
                 print(f"Could not load default responses: {e}")
                 self.chatbot.responses = {}
 
-        # Lowercase original user input for context logic
         original_input = self.user_input.lower()
 
-        # --- Context-aware handling ---
+        # --- Context-aware replies ---
         if original_input in {"yes", "yeah", "yep"}:
-            if "help" in self.last_bot_message.lower() and "anything" in self.last_bot_message.lower():
+            if "anything that you need help with" in self.last_bot_message.lower():
                 self.bot_response = "What do you need help with?"
                 self.last_bot_message = self.bot_response
                 return self.bot_response
-        elif original_input in {"no", "nah"}:
-            if "help" in self.last_bot_message.lower() and "anything" in self.last_bot_message.lower():
+
+        if original_input in {"no", "nah"}:
+            if "anything that you need help with" in self.last_bot_message.lower():
                 self.bot_response = "Okay! Have a great day."
                 self.last_bot_message = self.bot_response
                 return self.bot_response
 
-        # --- Fuzzy matching logic for normal input ---
+        # --- Continue with fuzzy match logic ---
         words = original_input.split()
         filtered_words = [word for word in words if word not in self.chatbot.stop_words]
         cleaned_input = " ".join(filtered_words)
@@ -84,8 +83,6 @@ class ChatApp:
         match = process.extractOne(cleaned_input, self.chatbot.responses.keys(), score_cutoff=80)
         if match:
             cleaned_input = str(match[0])
-        else:
-            cleaned_input = original_input  # fallback to original input
 
         self.bot_response = self.chatbot.get_response(cleaned_input)
         self.last_bot_message = self.bot_response
