@@ -49,13 +49,24 @@
     }
 
     .bot {
+      position: relative;
       background-color: transparent;
       color: #000;
       align-self: flex-start;
-      padding: 0;
+      padding-left: 20px; /* space for dot */
       margin-top: 8px;
       border-radius: 0;
+      text-indent: 0; /* don't indent first line */
     }
+    .bot::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: -16px;
+      font-size: 55px;
+      color: black;
+    }
+
 
     #message-form {
       position: relative;
@@ -235,6 +246,27 @@
         sendMessage();
       }
     });
+
+    // Random greeting messages
+  const greetings = [
+    "Hi! How can I help you?",
+    "Hello! Is there anything that you need help with today?",
+    "Hey! What do you need help with?"
+  ];
+
+  // Choose one greeting at random
+  function greetUser() {
+    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+    typeMessage(randomGreeting, 'bot');
+  }
+
+  // Run greeting when the page loads
+  window.addEventListener('DOMContentLoaded', greetUser);
+
+
+
+
+
   </script>
 </body>
 </html>
