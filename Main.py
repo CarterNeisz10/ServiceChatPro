@@ -90,6 +90,7 @@ class ChatApp:
 
         # Update last_bot_message with the current response (AFTER using the old one)
         self.last_bot_message = self.bot_response
+        self.bot_response = self.bot_response.replace('\n', '<br>')
         return self.bot_response
 
     def bot_reply(self):
