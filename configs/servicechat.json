@@ -86,42 +86,42 @@
 
 
 
-    "help": "Please enter a few keywords.\nFor a list of keywords, Type 'Keywords'.",
+    "help": "Please enter a few keywords.\n\nFor a list of keywords, Type 'Keywords'.",
     "keywords": [
       "ServiceChat, Products, Services, Price, About, Contact, Installation",
-      "Try typing:\nServiceChat, Products, Services, Price, About, Contact, Installation",
-      "Search for:\nServiceChat, Products, Services, Price, About, Contact, Installation",
-      "Enter:\nServiceChat, Products, Services, Price, About, Contact, Installation",
-      "Start with:\nServiceChat, Products, Services, Price, About, Contact, Installation"
+      "Try typing:\n\nServiceChat, Products, Services, Price, About, Contact, Installation",
+      "Search for:\n\nServiceChat, Products, Services, Price, About, Contact, Installation",
+      "Enter:\n\nServiceChat, Products, Services, Price, About, Contact, Installation",
+      "Start with:\n\nServiceChat, Products, Services, Price, About, Contact, Installation"
     ],
     "servicechat": "ServiceChat is a customer service chatbot that is here to help you with all of your customer service related needs! It will be integrated into your website for users to gain quick access to.",
-    "products": "ServiceChat\nOur brilliant customer service chatbot made to help your customers with their needs. It can answer a very wide range of questions, understand typos, think quickly, and more.",
+    "products": "ServiceChat\n\nOur brilliant customer service chatbot made to help your customers with their needs. It can answer a very wide range of questions, understand typos, think quickly, and more.",
     "services": "Basic Maintenance\nMake some tweaks to ServiceChat.\n\nHeavy Maintenance\nMake significant changes to ServiceChat.\n\nTotal Maintenance Overhaul\nReimagine your whole ServiceChat experience.",
     "price": [
-      "What would you like to know the price of?\nWe sell our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul.",
+      "What would you like to know the price of?\n\nWe sell our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul.",
       "We sell various different products and services, such as our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul. Prices vary.",
-      "What are you looking for?\nWe are selling our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul, all with their respective prices.",
+      "What are you looking for?\n\nWe are selling our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul, all with their respective prices.",
       "We have several different products and services for sale, like our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul."
     ],
     "cost": [
-      "What would you like to know the cost of?\nWe sell our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul.",
+      "What would you like to know the cost of?\n\nWe sell our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul.",
       "We sell various different products and services, such as our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul. Costs vary.",
-      "What are you looking for?\nWe are selling our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul, all with their respective costs.",
+      "What are you looking for?\n\nWe are selling our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul, all with their respective costs.",
       "We have several different products and services for sale, like our Chatbot, Basic Maintenance, Heavy Maintenance, Total Maintenance Overhaul."
     ],
     "about": "ServiceChat was created by a computer science student in university. Our goal is to help small business owners with their overwhelming amount of customers that need attention.",
-    "contact": "Contact us via E-mail at servicechatsolutions@gmail.com\nOr via Phone at +1(306)-961-0192.",
+    "contact": "Contact us via\n\nE-mail at servicechatsolutions@gmail.com\n\nPhone at +1(306)-961-0192.",
     "basic maintenance": "Make some tweaks to ServiceChat for $50.",
     "heavy maintenance": "Make significant changes to ServiceChat for $100.",
     "total maintenance overhaul": "Reimagine your whole ServiceChat experience for $150.",
     "chatbot" : [
-      "Our Chatbot is on sale for $250.00 CAD\nOr 5 monthly payments of $50 each.",
-      "You can purchase our Chatbot for $250.00 CAD\nOr 5 monthly payments of $50 each.",
-      "Our Chatbot is $250.00 CAD\nOr 5 monthly payments of $50 each.",
-      "Add ServiceChat to your website for $250.00 CAD\nOr 5 monthly payments of $50 each.",
-      "The ServiceChat Chatbot is $250.00 CAD\nOr 5 monthly payments of $50 each."
+      "Our Chatbot is on sale for\n\n$250.00 CAD\n\nOr 5 monthly payments of $50 each.",
+      "You can purchase our Chatbot for\n\n$250.00 CAD\n\nOr 5 monthly payments of $50 each.",
+      "Our Chatbot is\n\n$250.00 CAD\n\nOr 5 monthly payments of $50 each.",
+      "Add ServiceChat to your website for\n\n$250.00 CAD\n\nOr 5 monthly payments of $50 each.",
+      "The ServiceChat Chatbot is\n\n$250.00 CAD\n\nOr 5 monthly payments of $50 each."
     ],
-    "installation" : "ServiceChat can be installed on your website in 3 different ways\n1. Login to your website builder, and installation can be done in person with your website builder open.(recommended)\n\n2. You can receive an installation guide. This will come with specific instructions on how to install ServiceChat, and we will be here for you to contact if there are any issues.\n\n3. Send your login credentials to your website builder, and we can install it remotely.(Not recommended due to your privacy and safety)"
+    "installation" : "ServiceChat can be installed on your website in 3 different ways:\n\n1. Login to your website builder, and installation can be done in person with your website builder open.(recommended)\n\n2. You can receive an installation guide. This will come with specific instructions on how to install ServiceChat, and we will be here for you to contact if there are any issues.\n\n3. Send your login credentials to your website builder, and we can install it remotely.(Not recommended due to your privacy and safety)"
   }
 }
 
