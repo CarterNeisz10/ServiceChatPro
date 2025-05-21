@@ -218,11 +218,23 @@
       messageEl.className = `message ${sender}`;
       chatbox.appendChild(messageEl);
 
+      // Replace newlines with <br>
+      const formattedText = text.replace(/\n/g, '<br>');
+
       let index = 0;
+
+      // Instead of adding char by char textContent, we add char by char on a temporary string and assign innerHTML
+      let temp = '';
+
       const interval = setInterval(() => {
-        messageEl.textContent += text.charAt(index);
+        // Add the next character to temp
+        temp += formattedText.charAt(index);
+
+        // Set innerHTML so that <br> tags render as line breaks
+        messageEl.innerHTML = temp;
+
         index++;
-        if (index === text.length) {
+        if (index === formattedText.length) {
           clearInterval(interval);
           scrollBotMessageIntoView(messageEl);
         }
